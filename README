@@ -1,3 +1,12 @@
+# OpenInv
+Bukkit plugin to change inventories and enderchests of online and offline players. Documentation can be found on the original [Bukkit dev page](http://dev.bukkit.org/bukkit-plugins/openinv/).
+
+The [original version](https://github.com/lishid/OpenInv) dropped support for older CraftBukkit/Spigot version. This fork aims to maintain the original backwards compatibility while at the same time keeping up to date with future Minecraft versions!
+
+Download: https://github.com/Phoenix616/OpenInv/releases
+
+## License
+
 Copyright (C) 2011-2014 lishid.  All rights reserved.
 
 This program is free software: you can redistribute it and/or modify
