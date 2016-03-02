@@ -72,8 +72,15 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
             field = inventory.getClass().getField("extraSlots");
             modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
             field.set(inventory, extraSlots);
-        } catch(NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+
             // Unable to set final fields to item arrays, we're screwed. Noisily fail.
+        } catch(NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch(SecurityException e) {
+            e.printStackTrace();
+        } catch(IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch(IllegalAccessException e) {
             e.printStackTrace();
         }
     }
