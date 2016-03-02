@@ -33,18 +33,15 @@ import java.lang.reflect.Modifier;
 
 public class SpecialPlayerInventory extends PlayerInventory implements ISpecialPlayerInventory {
     private CraftInventory inventory = new CraftInventory(this);
-    private ItemStack[] items = new ItemStack[36];
-    private ItemStack[] armor = new ItemStack[4];
-    private ItemStack[] extraSlots = new ItemStack[5];
+    private ItemStack[] extra = new ItemStack[5];
     private CraftPlayer owner;
     private boolean playerOnline = false;
 
     public SpecialPlayerInventory(Player p, Boolean online) {
         super(((CraftPlayer) p).getHandle());
         this.owner = (CraftPlayer) p;
-        this.items = player.inventory.items;
-        this.armor = player.inventory.armor;
         this.playerOnline = online;
+        setItemArrays(this, player.inventory.items, player.inventory.armor, player.inventory.extraSlots);
         OpenInv.inventories.put(owner.getName().toLowerCase(), this);
     }
 
@@ -60,6 +57,10 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
     }
 
     private void linkInventory(PlayerInventory inventory) {
+        setItemArrays(inventory, items, armor, extraSlots);
+    }
+
+    private void setItemArrays(PlayerInventory inventory, ItemStack[] items, ItemStack[] armor, ItemStack[] extraSlots) {
         try {
             Field field = inventory.getClass().getField("items");
             Field modifiers = Field.class.getDeclaredField("modifiers");
@@ -138,6 +139,11 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
             i = getReversedArmorSlotNum(i);
         }
 
+        if(i >= is.length) {
+            i -= is.length;
+            is = this.extra;
+        }
+
         return is[i];
     }
 
@@ -157,6 +163,11 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
             is = this.extraSlots;
         } else if (is == this.armor) {
             i = getReversedArmorSlotNum(i);
+        }
+
+        if(i >= is.length) {
+            i -= is.length;
+            is = this.extra;
         }
 
         if (is[i] != null) {
@@ -197,6 +208,11 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
             i = getReversedArmorSlotNum(i);
         }
 
+        if(i >= is.length) {
+            i -= is.length;
+            is = this.extra;
+        }
+
         if (is[i] != null) {
             ItemStack itemstack = is[i];
 
@@ -223,6 +239,11 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
             is = this.extraSlots;
         } else if (is == this.armor) {
             i = getReversedArmorSlotNum(i);
+        }
+
+        if(i >= is.length) {
+            i -= is.length;
+            is = this.extra;
         }
 
         // Effects
