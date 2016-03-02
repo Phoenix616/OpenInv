@@ -28,11 +28,14 @@ import net.minecraft.server.v1_9_R1.*;
 import org.bukkit.craftbukkit.v1_9_R1.entity.*;
 import org.bukkit.craftbukkit.v1_9_R1.inventory.*;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
 public class SpecialPlayerInventory extends PlayerInventory implements ISpecialPlayerInventory {
     private CraftInventory inventory = new CraftInventory(this);
     private ItemStack[] items = new ItemStack[36];
     private ItemStack[] armor = new ItemStack[4];
-    private ItemStack[] extra = new ItemStack[5];
+    private ItemStack[] extraSlots = new ItemStack[5];
     private CraftPlayer owner;
     private boolean playerOnline = false;
 
@@ -57,8 +60,21 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
     }
 
     private void linkInventory(PlayerInventory inventory) {
-        for(int i = 0; i < 40; i++) {
-            inventory.setItem(i, this.getItem(i));
+        try {
+            Field field = inventory.getClass().getField("items");
+            Field modifiers = Field.class.getDeclaredField("modifiers");
+            modifiers.setAccessible(true);
+            modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+            field.set(inventory, items);
+            field = inventory.getClass().getField("armor");
+            modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+            field.set(inventory, armor);
+            field = inventory.getClass().getField("extraSlots");
+            modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+            field.set(inventory, extraSlots);
+        } catch(NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+            // Unable to set final fields to item arrays, we're screwed. Noisily fail.
+            e.printStackTrace();
         }
     }
 
@@ -110,7 +126,7 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
 
         if (i >= is.length) {
             i -= is.length;
-            is = this.extra;
+            is = this.extraSlots;
         } else if (is == this.armor) {
             i = getReversedArmorSlotNum(i);
         }
@@ -131,7 +147,7 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
 
         if (i >= is.length) {
             i -= is.length;
-            is = this.extra;
+            is = this.extraSlots;
         } else if (is == this.armor) {
             i = getReversedArmorSlotNum(i);
         }
@@ -169,7 +185,7 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
 
         if (i >= is.length) {
             i -= is.length;
-            is = this.extra;
+            is = this.extraSlots;
         } else if (is == this.armor) {
             i = getReversedArmorSlotNum(i);
         }
@@ -197,13 +213,13 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
 
         if (i >= is.length) {
             i -= is.length;
-            is = this.extra;
+            is = this.extraSlots;
         } else if (is == this.armor) {
             i = getReversedArmorSlotNum(i);
         }
 
         // Effects
-        if (is == this.extra) {
+        if (is == this.extraSlots) {
             owner.getHandle().drop(itemstack, true);
             itemstack = null;
         }

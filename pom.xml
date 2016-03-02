@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.lishid</groupId>
     <artifactId>OpenInv</artifactId>
-    <version>2.2.8-SNAPSHOT</version>
+    <version>2.2.9-Phoenix-SNAPSHOT</version>
     <description>Open anyone's inventory as a chest, real-time!</description>
     <repositories>
         <repository>
