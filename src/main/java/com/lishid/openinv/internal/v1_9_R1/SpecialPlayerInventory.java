@@ -247,7 +247,7 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
         }
 
         // Effects
-        if (is == this.extraSlots) {
+        if (is == this.extra) {
             owner.getHandle().drop(itemstack, true);
             itemstack = null;
         }
