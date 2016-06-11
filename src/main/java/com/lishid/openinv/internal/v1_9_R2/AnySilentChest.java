@@ -92,9 +92,6 @@ public class AnySilentChest implements IAnySilentChest {
             return true;
         }
 
-        BlockChest chest = (BlockChest) (((BlockChest) world.getType(position).getBlock()).g == BlockChest.Type.BASIC ?
-                Block.getByName("trapped_chest") : Block.getByName("chest"));
-
         TileEntity tileEntity = world.getTileEntity(position);
         if (!(tileEntity instanceof TileEntityChest)) {
             return true;
@@ -108,7 +105,7 @@ public class AnySilentChest implements IAnySilentChest {
         for (EnumDirection direction : EnumDirectionList.HORIZONTAL) {
             BlockPosition side = position.shift(direction);
             Block block = world.getType(side).getBlock();
-            if (block == chest) {
+            if (block instanceof BlockChest) {
                 if (!anychest && this.topBlocking(world, side)) {
                     return true;
                 }
