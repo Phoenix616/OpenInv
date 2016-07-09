@@ -33,7 +33,7 @@ import com.lishid.openinv.internal.InternalAccessor;
 
 public class OpenEnderPluginCommand implements CommandExecutor {
     private final OpenInv plugin;
-    public static Map<Player, String> openEnderHistory = new ConcurrentHashMap<Player, String>();
+    public static Map<String, String> openEnderHistory = new ConcurrentHashMap<String, String>();
 
     public OpenEnderPluginCommand(OpenInv plugin) {
         this.plugin = plugin;
@@ -58,11 +58,11 @@ public class OpenEnderPluginCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         // History management
-        String history = openEnderHistory.get(player);
+        String history = openEnderHistory.get(player.getName());
 
         if (history == null || history == "") {
             history = player.getName();
-            openEnderHistory.put(player, history);
+            openEnderHistory.put(player.getName(), history);
         }
 
         final String name;
@@ -136,7 +136,7 @@ public class OpenEnderPluginCommand implements CommandExecutor {
         }
 
         // Record the target
-        openEnderHistory.put(player, target.getName());
+        openEnderHistory.put(player.getName(), target.getName());
 
         // Create the inventory
         ISpecialEnderChest chest = OpenInv.enderChests.get(target.getName().toLowerCase());
