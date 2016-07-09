@@ -88,7 +88,6 @@ public class SpecialEnderChest extends InventorySubcontainer implements ISpecial
         if (!playerOnline) {
             owner = (CraftPlayer) p;
             linkInventory(((CraftPlayer) p).getHandle().getEnderChest());
-            p.saveData();
             playerOnline = true;
         }
     }

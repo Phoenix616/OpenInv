@@ -71,7 +71,6 @@ public class SpecialEnderChest extends InventorySubcontainer implements IInvento
                 field.set(playerEnderChest, this.items);
             }
             catch (Exception e) {}
-            p.saveData();
             playerOnline = true;
         }
     }

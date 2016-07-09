@@ -61,7 +61,6 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
             this.player = owner.getHandle();
             this.player.inventory.items = this.items;
             this.player.inventory.armor = this.armor;
-            owner.saveData();
             playerOnline = true;
         }
     }
