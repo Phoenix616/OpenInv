@@ -1,6 +1,6 @@
 name: OpenInv
 main: com.lishid.openinv.OpenInv
-version: '2.2.15 (Phoenix616's Fork)'
+version: "2.2.15 (Phoenix616's Fork)"
 author: lishid
 authors: [Phoenix616]
 softdepend: [UUIDDB]
