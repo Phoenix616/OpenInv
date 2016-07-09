@@ -85,7 +85,7 @@ public class OpenEnderPluginCommand implements CommandExecutor {
         Player target = plugin.getServer().getPlayer(name);
         // Targeted player was not found online, start asynchron lookup in files
         if (target == null) {
-            sender.sendMessage(ChatColor.GREEN + "Starting inventory lookup.");
+            sender.sendMessage(ChatColor.YELLOW + "Starting inventory lookup.");
             plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
                 @Override
                 public void run() {
@@ -146,6 +146,7 @@ public class OpenEnderPluginCommand implements CommandExecutor {
 
         // Open the inventory
         player.openInventory(chest.getBukkitInventory());
+        player.sendMessage(ChatColor.GREEN + "Opened " + target.getName() + "'s enderchest!");
 
         return;
     }
