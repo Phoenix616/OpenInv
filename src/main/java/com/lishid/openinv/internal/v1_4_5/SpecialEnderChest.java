@@ -63,6 +63,7 @@ public class SpecialEnderChest extends InventorySubcontainer implements IInvento
 
     public void playerOnline(Player p) {
         if (!playerOnline) {
+            owner = (CraftPlayer) p;
             try {
                 InventoryEnderChest playerEnderChest = ((CraftPlayer) p).getHandle().getEnderChest();
                 Field field = playerEnderChest.getClass().getField("items");
