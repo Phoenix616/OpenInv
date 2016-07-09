@@ -16,6 +16,7 @@
 
 package com.lishid.openinv.internal;
 
+import com.lishid.openinv.OpenInv;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -24,6 +25,12 @@ public abstract class AbstractPlayerDataManager {
         Player player = Bukkit.getServer().getPlayer(name);
         if (player != null && player.isOnline()) {
             return player;
+        }
+        if (OpenInv.inventories.containsKey(name.toLowerCase())) {
+            return (Player) OpenInv.inventories.get(name.toLowerCase()).getOwner();
+        }
+        if (OpenInv.enderChests.containsKey(name.toLowerCase())) {
+            return (Player) OpenInv.enderChests.get(name.toLowerCase()).getOwner();
         }
         return loadOfflinePlayer(name);
     }

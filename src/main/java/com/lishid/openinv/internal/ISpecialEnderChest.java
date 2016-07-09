@@ -18,6 +18,7 @@ package com.lishid.openinv.internal;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 
 public interface ISpecialEnderChest {
     public Inventory getBukkitInventory();
@@ -25,5 +26,7 @@ public interface ISpecialEnderChest {
     public void playerOnline(Player p);
 
     public void playerOffline();
+
+    public InventoryHolder getOwner();
 
 }
