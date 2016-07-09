@@ -30,7 +30,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.lishid.openinv.commands.*;
 import com.lishid.openinv.internal.IAnySilentChest;
 import com.lishid.openinv.internal.IInventoryAccess;
-import com.lishid.openinv.internal.IPlayerDataManager;
+import com.lishid.openinv.internal.AbstractPlayerDataManager;
 import com.lishid.openinv.internal.ISpecialEnderChest;
 import com.lishid.openinv.internal.ISpecialPlayerInventory;
 import com.lishid.openinv.internal.InternalAccessor;
@@ -48,7 +48,7 @@ public class OpenInv extends JavaPlugin {
 
     public static OpenInv mainPlugin;
 
-    public static IPlayerDataManager playerLoader;
+    public static AbstractPlayerDataManager playerLoader;
     public static IInventoryAccess inventoryAccess;
     public static IAnySilentChest anySilentChest;
 

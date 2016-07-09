@@ -24,14 +24,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.lishid.openinv.OpenInv;
-import com.lishid.openinv.internal.IPlayerDataManager;
+import com.lishid.openinv.internal.AbstractPlayerDataManager;
 
 //Volatile
 import net.minecraft.server.v1_5_R3.*;
 import org.bukkit.craftbukkit.v1_5_R3.*;
 
-public class PlayerDataManager implements IPlayerDataManager {
-    public Player loadPlayer(String name) {
+public class PlayerDataManager extends AbstractPlayerDataManager {
+    public Player loadOfflinePlayer(String name) {
         try {
             // Default player folder
             File playerfolder = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "players");

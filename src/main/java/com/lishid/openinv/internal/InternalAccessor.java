@@ -46,8 +46,8 @@ public class InternalAccessor {
         OpenInv.log("OpenInv encountered an error with the CraftBukkit version \"" + Instance.version + "\". Please look for an updated version of OpenInv.");
     }
 
-    public IPlayerDataManager newPlayerDataManager() {
-        return (IPlayerDataManager) createObject(IPlayerDataManager.class, "PlayerDataManager");
+    public AbstractPlayerDataManager newPlayerDataManager() {
+        return (AbstractPlayerDataManager) createObject(AbstractPlayerDataManager.class, "PlayerDataManager");
     }
 
     public IInventoryAccess newInventoryAccess() {
