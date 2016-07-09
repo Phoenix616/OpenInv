@@ -57,10 +57,11 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
     @Override
     public void playerOnline(Player player) {
         if (!playerOnline) {
-            CraftPlayer p = (CraftPlayer) player;
-            p.getHandle().inventory.items = this.items;
-            p.getHandle().inventory.armor = this.armor;
-            p.saveData();
+            owner = (CraftPlayer) player;
+            this.player = owner.getHandle();
+            this.player.inventory.items = this.items;
+            this.player.inventory.armor = this.armor;
+            owner.saveData();
             playerOnline = true;
         }
     }

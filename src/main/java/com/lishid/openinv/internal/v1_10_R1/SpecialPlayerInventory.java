@@ -93,9 +93,10 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
 
     public void playerOnline(Player player) {
         if (!playerOnline) {
-            CraftPlayer p = (CraftPlayer) player;
-            linkInventory(p.getHandle().inventory);
-            p.saveData();
+            owner = (CraftPlayer) player;
+            this.player = owner.getHandle();
+            linkInventory(this.player.inventory);
+            owner.saveData();
             playerOnline = true;
         }
     }
