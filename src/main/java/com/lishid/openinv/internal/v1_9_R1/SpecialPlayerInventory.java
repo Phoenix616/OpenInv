@@ -74,6 +74,11 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
             modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
             field.set(inventory, extraSlots);
 
+            field = PlayerInventory.class.getDeclaredField("g"); // All inventory arrays array
+            field.setAccessible(true);
+            modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+            field.set(inventory, new ItemStack[][] { items, armor, extraSlots });
+
             // Unable to set final fields to item arrays, we're screwed. Noisily fail.
         } catch(NoSuchFieldException e) {
             e.printStackTrace();
