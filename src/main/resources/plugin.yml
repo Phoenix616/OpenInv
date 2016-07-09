@@ -3,6 +3,7 @@ main: com.lishid.openinv.OpenInv
 version: '2.2.15 (Phoenix616's Fork)'
 author: lishid
 authors: [Phoenix616]
+softdepend: [UUIDDB]
 description: >
              This plugin allows you to open a player's inventory as a chest and interact with it in real time.
 commands:

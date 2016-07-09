@@ -18,8 +18,11 @@ package com.lishid.openinv;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Logger;
 
+import net.zaiyers.UUIDDB.bukkit.UUIDDB;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -52,6 +55,8 @@ public class OpenInv extends JavaPlugin {
     public static IInventoryAccess inventoryAccess;
     public static IAnySilentChest anySilentChest;
 
+    private static UUIDDB uuidDb;
+
     public void onEnable() {
         // Get plugin manager
         PluginManager pm = getServer().getPluginManager();
@@ -69,6 +74,13 @@ public class OpenInv extends JavaPlugin {
         playerLoader = InternalAccessor.Instance.newPlayerDataManager();
         inventoryAccess = InternalAccessor.Instance.newInventoryAccess();
         anySilentChest = InternalAccessor.Instance.newAnySilentChest();
+
+        if (getServer().getPluginManager().isPluginEnabled("UUIDDB")) {
+            uuidDb = UUIDDB.getInstance();
+            OpenInv.log("Found UUIDDB " + uuidDb.getDescription().getVersion() + "! Using it for UUID lookups!");
+        } else {
+            uuidDb = null;
+        }
 
         mainPlugin = this;
         FileConfiguration config = getConfig();
@@ -194,5 +206,15 @@ public class OpenInv extends JavaPlugin {
             perm += parts[i] + ".";
         }
         return player.hasPermission(permission);
+    }
+
+    public static UUID getUuidFromDb(String name) {
+        if (uuidDb != null) {
+            String uuidStr = uuidDb.getStorage().getUUIDByName(name, false);
+            if (uuidStr != null) {
+                return UUID.fromString(uuidStr);
+            }
+        }
+        return null;
     }
 }

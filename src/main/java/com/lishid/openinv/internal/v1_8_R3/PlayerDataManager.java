@@ -65,11 +65,15 @@ public class PlayerDataManager extends AbstractPlayerDataManager {
     }
 
     private static UUID matchUser(String search) {
+        UUID found = OpenInv.getUuidFromDb(search);
+        if (found != null) {
+            return found;
+        }
+
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(search);
         if (offlinePlayer != null && offlinePlayer.hasPlayedBefore()) {
             return offlinePlayer.getUniqueId();
         }
-        UUID found = null;
 
         String lowerSearch = search.toLowerCase();
         int delta = 2147483647;
