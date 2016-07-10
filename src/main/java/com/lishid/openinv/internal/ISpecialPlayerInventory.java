@@ -25,7 +25,7 @@ public interface ISpecialPlayerInventory {
 
     public void playerOnline(Player p);
 
-    public void playerOffline();
+    public boolean playerOffline();
 
     public InventoryHolder getOwner();
 }

@@ -25,7 +25,7 @@ public interface ISpecialEnderChest {
 
     public void playerOnline(Player p);
 
-    public void playerOffline();
+    public boolean playerOffline();
 
     public InventoryHolder getOwner();
 

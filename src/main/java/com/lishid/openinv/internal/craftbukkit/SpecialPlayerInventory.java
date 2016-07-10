@@ -47,11 +47,12 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
         return inventory;
     }
 
-    public void InventoryRemovalCheck() {
-        owner.saveData();
-        if (transaction.isEmpty() && !playerOnline) {
-            OpenInv.inventories.remove(owner.getName().toLowerCase());
+    public boolean inventoryRemovalCheck(boolean save) {
+        boolean offline = transaction.isEmpty() && !playerOnline;
+        if (offline && save) {
+            owner.saveData();
         }
+        return offline;
     }
 
     @Override
@@ -66,15 +67,15 @@ public class SpecialPlayerInventory extends PlayerInventory implements ISpecialP
     }
 
     @Override
-    public void playerOffline() {
+    public boolean playerOffline() {
         playerOnline = false;
-        this.InventoryRemovalCheck();
+        return this.inventoryRemovalCheck(false);
     }
 
     @Override
     public void onClose(CraftHumanEntity who) {
         super.onClose(who);
-        this.InventoryRemovalCheck();
+        this.inventoryRemovalCheck(true);
     }
 
     @Override

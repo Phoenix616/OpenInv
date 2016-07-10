@@ -50,11 +50,12 @@ public class SpecialEnderChest extends InventorySubcontainer implements ISpecial
         OpenInv.enderChests.put(owner.getName().toLowerCase(), this);
     }
 
-    private void saveOnExit() {
-        if (transaction.isEmpty() && !playerOnline) {
+    public boolean inventoryRemovalCheck(boolean save) {
+        boolean offline = transaction.isEmpty() && !playerOnline;
+        if (offline && save) {
             owner.saveData();
-            OpenInv.enderChests.remove(owner.getName().toLowerCase());
         }
+        return offline;
     }
 
     private void linkInventory(InventoryEnderChest inventory) {
@@ -92,17 +93,15 @@ public class SpecialEnderChest extends InventorySubcontainer implements ISpecial
         }
     }
 
-    public void playerOffline() {
+    public boolean playerOffline() {
         playerOnline = false;
-        owner.loadData();
-        linkInventory(owner.getHandle().getEnderChest());
-        saveOnExit();
+        return inventoryRemovalCheck(false);
     }
 
     @Override
     public void onClose(CraftHumanEntity who) {
         super.onClose(who);
-        saveOnExit();
+        inventoryRemovalCheck(true);
     }
 
     @Override

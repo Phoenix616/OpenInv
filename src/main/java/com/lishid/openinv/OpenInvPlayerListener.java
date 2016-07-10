@@ -52,11 +52,15 @@ public class OpenInvPlayerListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         ISpecialPlayerInventory inventory = OpenInv.inventories.get(event.getPlayer().getName().toLowerCase());
         if (inventory != null) {
-            inventory.playerOffline();
+            if (inventory.playerOffline()) {
+                OpenInv.inventories.remove(event.getPlayer().getName());
+            }
         }
-        ISpecialEnderChest chest = OpenInv.enderChests.get(event.getPlayer().getName().toLowerCase());
-        if (chest != null) {
-            chest.playerOffline();
+        ISpecialEnderChest enderChest = OpenInv.enderChests.get(event.getPlayer().getName().toLowerCase());
+        if (enderChest != null) {
+            if (enderChest.playerOffline()) {
+                OpenInv.enderChests.remove(event.getPlayer().getName());
+            }
         }
     }
 

@@ -54,11 +54,12 @@ public class SpecialEnderChest extends InventorySubcontainer implements IInvento
         return inventory;
     }
 
-    public void InventoryRemovalCheck() {
-        owner.saveData();
-        if (transaction.isEmpty() && !playerOnline) {
-            OpenInv.enderChests.remove(owner.getName().toLowerCase());
+    public boolean inventoryRemovalCheck(boolean save) {
+        boolean offline = transaction.isEmpty() && !playerOnline;
+        if (offline && save) {
+            owner.saveData();
         }
+        return offline;
     }
 
     public void playerOnline(Player p) {
@@ -75,8 +76,9 @@ public class SpecialEnderChest extends InventorySubcontainer implements IInvento
         }
     }
 
-    public void playerOffline() {
+    public boolean playerOffline() {
         playerOnline = false;
+        return inventoryRemovalCheck(false);
     }
 
     public ItemStack[] getContents() {
@@ -89,7 +91,7 @@ public class SpecialEnderChest extends InventorySubcontainer implements IInvento
 
     public void onClose(CraftHumanEntity who) {
         transaction.remove(who);
-        this.InventoryRemovalCheck();
+        inventoryRemovalCheck(true);
     }
 
     public List<HumanEntity> getViewers() {
